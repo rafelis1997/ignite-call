@@ -35,6 +35,18 @@ export const TimePicker = styled('div', {
   right: 0,
   width: 280,
 
+  '&::-webkit-scrollbar': {
+    width: '4px',
+    padding: '2px 0',
+  },
+  '&::-webkit-scrollbar-track': {
+    width: '6px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: '$gray400',
+    borderRadius: '24px',
+  },
+
   '@media (max-width:900px)': {
     position: 'unset',
     width: '100%',
@@ -69,6 +81,7 @@ export const TimePickerItem = styled('button', {
   borderRadius: '$sm',
   fontSize: '$sm',
   lineHeight: '$base',
+  maxHeight: '38px',
 
   '&:last-child': {
     marginBottom: '$6',
