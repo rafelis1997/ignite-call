@@ -14,7 +14,7 @@ export default async function handle(
   const username = String(req.query.username)
   const { year, month } = req.query
 
-  console.log(year)
+  console.log(username)
 
   if (!year || !month) {
     return res.status(400).json({ message: 'Year or month not specified' })
@@ -38,6 +38,8 @@ export default async function handle(
       user_id: user.id,
     },
   })
+
+  console.log(user.id)
 
   const blockedWeekDays = [0, 1, 2, 3, 4, 5, 6].filter((weekDay) => {
     return !availableWeekDays.some(
