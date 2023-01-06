@@ -29,6 +29,7 @@ export default function App({
           }}
         />
         <Component {...pageProps} />
+        <Policy href="/policy">Privacy Policy</Policy>
         <StyledContainer position="top-right" autoClose={3000} />
       </SessionProvider>
     </QueryClientProvider>
@@ -45,4 +46,14 @@ const StyledContainer = styled(ToastContainer, {
   '.Toastify__progress-bar': {
     background: '$ignite500',
   },
+})
+
+export const Policy = styled('a', {
+  position: 'absolute',
+  left: '50%',
+  bottom: 10,
+  color: '$gray400',
+  fontFamily: '$default',
+  textDecoration: 'none',
+  fontSize: '$sm',
 })
