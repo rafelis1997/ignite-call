@@ -11,6 +11,10 @@ export default function Document() {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <meta
+          name="google-site-verification"
+          content="Za7Tcx9URHC-XFxnZj3SurZb5AI3DwyYGrWTJ1taMTw"
+        />
 
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
