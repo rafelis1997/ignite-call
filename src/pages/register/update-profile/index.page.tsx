@@ -52,7 +52,7 @@ export default function Register() {
     toast.update(toastBody, {
       render: 'Conta criada com sucesso',
       type: 'default',
-      icon: () => <CheckCircle color="white" weight="fill" size={32} />,
+      icon: () => <CheckCircle color="green" weight="fill" size={32} />,
       isLoading: false,
       autoClose: 3000,
     })

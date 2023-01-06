@@ -55,7 +55,7 @@ export function ConfirmStep({
     toast.update(id, {
       render: 'Agendamento feito com sucesso',
       type: 'default',
-      icon: () => <CheckCircle color="white" weight="fill" size={32} />,
+      icon: () => <CheckCircle color="green" weight="fill" size={32} />,
       isLoading: false,
       autoClose: 3000,
     })
