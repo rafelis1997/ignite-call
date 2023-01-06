@@ -2,8 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Text, TextArea, TextInput } from '@ignite-ui/react'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
-import { CalendarBlank, Clock } from 'phosphor-react'
+import { CalendarBlank, CheckCircle, Clock } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 import { api } from '../../../../../lib/axios'
 
@@ -42,11 +43,21 @@ export function ConfirmStep({
   async function handleConfirmSchedule(data: ConfirmFormData) {
     const { name, email, observations } = data
 
+    const id = toast.loading('Agendando...')
+
     await api.post(`/users/${username}/schedule`, {
       name,
       email,
       observations,
       date: schedulingDate,
+    })
+
+    toast.update(id, {
+      render: 'Agendamento feito com sucesso',
+      type: 'default',
+      icon: () => <CheckCircle color="white" weight="fill" size={32} />,
+      isLoading: false,
+      autoClose: 3000,
     })
 
     onCancelConfirmation()

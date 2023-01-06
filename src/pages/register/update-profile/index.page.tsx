@@ -6,7 +6,7 @@ import {
   Text,
   TextArea,
 } from '@ignite-ui/react'
-import { ArrowRight } from 'phosphor-react'
+import { ArrowRight, CheckCircle } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -21,6 +21,7 @@ import { buildNextAuthOptions } from '../../api/auth/[...nextauth].api'
 import { api } from '../../../lib/axios'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
+import { toast } from 'react-toastify'
 
 const updateProfileSchema = z.object({
   bio: z.string(),
@@ -42,8 +43,18 @@ export default function Register() {
   const router = useRouter()
 
   async function handleUpdateProfile(data: UpdateProfileData) {
+    const toastBody = toast.loading('Criando...')
+
     await api.put('users/profile', {
       bio: data.bio,
+    })
+
+    toast.update(toastBody, {
+      render: 'Conta criada com sucesso',
+      type: 'default',
+      icon: () => <CheckCircle color="white" weight="fill" size={32} />,
+      isLoading: false,
+      autoClose: 3000,
     })
 
     await router.push(`/schedule/${session.data?.user.username}`)
