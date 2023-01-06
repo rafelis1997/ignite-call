@@ -5,6 +5,7 @@ import { CaretLeft, CaretRight } from 'phosphor-react'
 import { useMemo, useState } from 'react'
 import { api } from '../../lib/axios'
 import { getWeekDays } from '../../utils/get-week-days'
+import { Loading } from '../Loading'
 import {
   CalendarActions,
   CalendarBody,
@@ -60,7 +61,7 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
 
   const username = String(router.query.username)
 
-  const { data: blockedDates } = useQuery<BlockedDates>(
+  const { data: blockedDates, isLoading } = useQuery<BlockedDates>(
     [
       'blocked-dates',
       currentDate.get('year'),
@@ -169,32 +170,38 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
       </CalendarHeader>
 
       <CalendarBody>
-        <thead>
-          <tr>
-            {shortWeekDays.map((weekDay) => (
-              <th key={weekDay}>{weekDay}.</th>
-            ))}
-          </tr>
-        </thead>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <thead>
+              <tr>
+                {shortWeekDays.map((weekDay) => (
+                  <th key={weekDay}>{weekDay}.</th>
+                ))}
+              </tr>
+            </thead>
 
-        <tbody>
-          {calendarWeeks.map(({ week, days }) => (
-            <tr key={week}>
-              {days.map(({ date, disabled }) => {
-                return (
-                  <td key={date.toString()}>
-                    <CalendarDay
-                      disabled={disabled}
-                      onClick={() => onDateSelected(date.toDate())}
-                    >
-                      {date.get('date')}
-                    </CalendarDay>
-                  </td>
-                )
-              })}
-            </tr>
-          ))}
-        </tbody>
+            <tbody>
+              {calendarWeeks.map(({ week, days }) => (
+                <tr key={week}>
+                  {days.map(({ date, disabled }) => {
+                    return (
+                      <td key={date.toString()}>
+                        <CalendarDay
+                          disabled={disabled}
+                          onClick={() => onDateSelected(date.toDate())}
+                        >
+                          {date.get('date')}
+                        </CalendarDay>
+                      </td>
+                    )
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </>
+        )}
       </CalendarBody>
     </CalendarContainer>
   )

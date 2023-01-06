@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Calendar } from '../../../../../components/Calendar'
+import { Loading } from '../../../../../components/Loading'
 import { api } from '../../../../../lib/axios'
 import {
   Container,
@@ -39,7 +40,7 @@ export function CalendarStep({ onSelectDateTime }: CalendarStepProps) {
     ? dayjs(selectedDate).format('YYYY-MM-DD')
     : null
 
-  const { data: availability } = useQuery<Availability>(
+  const { data: availability, isLoading } = useQuery<Availability>(
     ['availability', selectedDateWithoutTime],
     async () => {
       const response = await api.get(`/users/${username}/availability`, {
@@ -73,19 +74,23 @@ export function CalendarStep({ onSelectDateTime }: CalendarStepProps) {
             {weekDay} <span>{describedDate}</span>
           </TimePickerHeader>
 
-          <TimePickerList>
-            {availability?.possibleTimes.map((hour) => {
-              return (
-                <TimePickerItem
-                  key={hour}
-                  disabled={!availability.availableTimes.includes(hour)}
-                  onClick={() => handleSelectTime(hour)}
-                >
-                  {String(hour).padStart(2, '0')}:00h
-                </TimePickerItem>
-              )
-            })}
-          </TimePickerList>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <TimePickerList>
+              {availability?.possibleTimes.map((hour) => {
+                return (
+                  <TimePickerItem
+                    key={hour}
+                    disabled={!availability.availableTimes.includes(hour)}
+                    onClick={() => handleSelectTime(hour)}
+                  >
+                    {String(hour).padStart(2, '0')}:00h
+                  </TimePickerItem>
+                )
+              })}
+            </TimePickerList>
+          )}
         </TimePicker>
       )}
     </Container>
