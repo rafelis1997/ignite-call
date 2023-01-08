@@ -167,9 +167,6 @@ export default function Policy() {
       </p>
       <ul>
         <li>Google</li>
-        <li>Facebook</li>
-        <li>Twitter</li>
-        <li>LinkedIn</li>
       </ul>
       <p>
         If You decide to register through or otherwise grant us access to a
