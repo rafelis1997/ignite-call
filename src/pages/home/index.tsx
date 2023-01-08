@@ -63,7 +63,7 @@ export default function Home() {
           <Description>
             <Heading size="2xl">
               Configure em quais dias da semana e em quais horários você tem
-              disponibilidade
+              disponibilidade.
             </Heading>
           </Description>
         </Features>
@@ -87,7 +87,7 @@ export default function Home() {
           </Preview>
           <Description>
             <Heading size="2xl">
-              Conecte sua conta Google e seu Google Calendar
+              Conecte sua conta Google e seu Google Calendar.
             </Heading>
             <Policy />
           </Description>
@@ -127,8 +127,8 @@ export default function Home() {
           </Preview>
           <Description>
             <Heading size="2xl">
-              Nós marcamos na sua Google Agenda sua reunião e geramos
-              automaticamente o link para a chamada
+              Nós marcamos na sua Google Agenda a reunião e geramos
+              automaticamente o link para a chamada.
             </Heading>
           </Description>
         </Features>

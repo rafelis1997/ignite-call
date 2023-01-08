@@ -25,6 +25,12 @@ export const ContainerHero = styled('div', {
   maxWidth: 'calc(100vw - (100vw - 1160px) / 2)',
   margin: '0 auto',
   paddingLeft: '20px',
+
+  '@media(max-width:900px)': {
+    'div:last-child': {
+      display: 'none',
+    },
+  },
 })
 
 export const Description = styled('div', {
@@ -32,14 +38,16 @@ export const Description = styled('div', {
   padding: '0 $10',
 
   [`> ${Heading}`]: {
-    '@media(max-width:600px)': {
-      fontSize: '$6xl',
+    '@media(max-width:900px)': {
+      fontSize: '$4xl',
+      textAlign: 'center',
     },
   },
 
   [`> ${Text}`]: {
     marginTop: '$2',
     color: '$gray200',
+    textAlign: 'center',
   },
 })
 
@@ -50,8 +58,9 @@ export const Preview = styled('div', {
   justifyContent: 'center',
   gap: '$20',
 
-  '@media(max-width:600px)': {
-    display: 'none',
+  '@media(max-width:900px)': {
+    justifyContent: 'space-between',
+    padding: '0 $8',
   },
 })
 
@@ -74,9 +83,21 @@ export const Features = styled('div', {
     direction: {
       inverted: {
         flexDirection: 'row-reverse',
+
+        '@media(max-width:900px)': {
+          flexDirection: 'column',
+          textAlign: 'center',
+          justifyContent: 'space-between',
+        },
       },
       default: {
         flexDirection: 'row',
+
+        '@media(max-width:900px)': {
+          flexDirection: 'column',
+          textAlign: 'center',
+          justifyContent: 'space-between',
+        },
       },
     },
   },
