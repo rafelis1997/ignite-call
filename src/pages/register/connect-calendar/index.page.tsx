@@ -3,9 +3,11 @@ import { signIn, useSession } from 'next-auth/react'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { ArrowRight, Check } from 'phosphor-react'
+import * as Dialog from '@radix-ui/react-dialog'
 
 import { Container, Header } from '../styles'
 import { AuthError, ConnectBox, ConnectItem } from './styles'
+import { Modal } from '../../../components/Dialog'
 
 export default function ConnectCalendar() {
   const session = useSession()
@@ -37,21 +39,25 @@ export default function ConnectCalendar() {
 
         <ConnectBox>
           <ConnectItem>
-            <Text>Google Calendar</Text>
+            <Text>Conectar Conta</Text>
             {isSignedIn ? (
               <Button disabled size="sm">
                 Conectado
                 <Check />
               </Button>
             ) : (
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={handleConnectCalendar}
-              >
-                Conectar
-                <ArrowRight />
-              </Button>
+              <Dialog.Root>
+                <Dialog.Trigger asChild>
+                  <Button variant="secondary" size="sm">
+                    Conectar
+                    <ArrowRight />
+                  </Button>
+                </Dialog.Trigger>
+
+                <Dialog.Portal>
+                  <Modal connect={handleConnectCalendar} />
+                </Dialog.Portal>
+              </Dialog.Root>
             )}
           </ConnectItem>
 
