@@ -75,8 +75,6 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
         },
       })
 
-      console.log(String(currentDate.get('month') + 1).padStart(2, '0'))
-
       return response.data
     },
   )
@@ -169,11 +167,11 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
         </CalendarActions>
       </CalendarHeader>
 
-      <CalendarBody>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <CalendarBody>
             <thead>
               <tr>
                 {shortWeekDays.map((weekDay) => (
@@ -200,9 +198,9 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
                 </tr>
               ))}
             </tbody>
-          </>
-        )}
-      </CalendarBody>
+          </CalendarBody>
+        </>
+      )}
     </CalendarContainer>
   )
 }

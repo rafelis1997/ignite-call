@@ -13,30 +13,52 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method !== 'PUT') {
+  if (req.method !== 'PUT' && req.method !== 'GET') {
     return res.status(405).end()
   }
 
-  const session = await unstable_getServerSession(
-    req,
-    res,
-    buildNextAuthOptions(req, res),
-  )
+  if (req.method === 'PUT') {
+    const session = await unstable_getServerSession(
+      req,
+      res,
+      buildNextAuthOptions(req, res),
+    )
 
-  if (!session) {
-    return res.status(401).end()
+    if (!session) {
+      return res.status(401).end()
+    }
+
+    const { bio } = updateProfileBodySchema.parse(req.body)
+
+    await prisma.user.update({
+      where: {
+        id: session.user.id,
+      },
+      data: {
+        bio,
+      },
+    })
+
+    return res.status(204).end()
   }
 
-  const { bio } = updateProfileBodySchema.parse(req.body)
+  if (req.method === 'GET') {
+    const session = await unstable_getServerSession(
+      req,
+      res,
+      buildNextAuthOptions(req, res),
+    )
 
-  await prisma.user.update({
-    where: {
-      id: session.user.id,
-    },
-    data: {
-      bio,
-    },
-  })
+    if (!session) {
+      return res.status(401).end()
+    }
 
-  return res.status(204).end()
+    const user = await prisma.user.findUnique({
+      where: {
+        id: session.user.id,
+      },
+    })
+
+    return res.status(200).json({ user })
+  }
 }

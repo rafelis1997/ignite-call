@@ -22,6 +22,7 @@ import { api } from '../../../lib/axios'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 import { toast } from 'react-toastify'
+import { useQuery } from '@tanstack/react-query'
 
 const updateProfileSchema = z.object({
   bio: z.string(),
@@ -30,6 +31,16 @@ const updateProfileSchema = z.object({
 type UpdateProfileData = z.infer<typeof updateProfileSchema>
 
 export default function Register() {
+  const session = useSession()
+
+  const router = useRouter()
+
+  const { data: user } = useQuery(['user'], async () => {
+    const { data } = await api.get('/users/profile')
+
+    return data.user
+  })
+
   const {
     register,
     handleSubmit,
@@ -38,19 +49,17 @@ export default function Register() {
     resolver: zodResolver(updateProfileSchema),
   })
 
-  const session = useSession()
-
-  const router = useRouter()
-
   async function handleUpdateProfile(data: UpdateProfileData) {
-    const toastBody = toast.loading('Criando...')
+    const toastBody = toast.loading(user.bio ? 'Atualizando...' : 'Criando...')
 
     await api.put('users/profile', {
       bio: data.bio,
     })
 
     toast.update(toastBody, {
-      render: 'Conta criada com sucesso',
+      render: user.bio
+        ? 'Dados atualizados com sucesso'
+        : 'Conta criada com sucesso',
       type: 'default',
       icon: () => <CheckCircle color="green" weight="fill" size={32} />,
       isLoading: false,

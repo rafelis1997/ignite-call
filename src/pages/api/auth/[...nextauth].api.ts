@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse, NextPageContext } from 'next'
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
 import { PrismaAdapter } from '../../../lib/auth/prisma-adapter'
+import { prisma } from '../../../lib/prisma'
+import { parseCookies } from 'nookies'
 
 export function buildNextAuthOptions(
   req: NextApiRequest | NextPageContext['req'],
@@ -41,6 +43,20 @@ export function buildNextAuthOptions(
           !account?.scope?.includes('https://www.googleapis.com/auth/calendar')
         ) {
           return '/register/connect-calendar?error=permissions'
+        }
+
+        const { '@ignitecall:userId': userIdOnCookies } = parseCookies({ req })
+
+        const hasUser = await prisma.account.findFirst({
+          where: {
+            provider_account_id: account.providerAccountId,
+          },
+        })
+
+        console.log(hasUser)
+
+        if (!hasUser && !userIdOnCookies) {
+          return '/register/'
         }
 
         return true

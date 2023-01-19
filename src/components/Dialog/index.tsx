@@ -14,18 +14,19 @@ import {
 import normalButton from '../../assets/google-button/btn_google_light_normal_ios.svg'
 
 interface Props {
+  title: string
   connect: () => Promise<void>
 }
 
-export function Modal({ connect }: Props) {
+export function Modal({ connect, title }: Props) {
   return (
     <>
       <Overlay />
       <Content>
-        <Title>Conecte uma agenda</Title>
+        <Title>{title}</Title>
 
         <ContentContainer>
-          <Text size="lg">Google Agenda:</Text>
+          <Text size="lg">Google</Text>
           <Button onClick={connect}>
             <Image
               src={normalButton}

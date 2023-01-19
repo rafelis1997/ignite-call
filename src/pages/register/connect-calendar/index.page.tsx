@@ -55,7 +55,10 @@ export default function ConnectCalendar() {
                 </Dialog.Trigger>
 
                 <Dialog.Portal>
-                  <Modal connect={handleConnectCalendar} />
+                  <Modal
+                    connect={handleConnectCalendar}
+                    title="Conecte uma agenda"
+                  />
                 </Dialog.Portal>
               </Dialog.Root>
             )}
