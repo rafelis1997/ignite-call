@@ -53,8 +53,6 @@ export function buildNextAuthOptions(
           },
         })
 
-        console.log(hasUser)
-
         if (!hasUser && !userIdOnCookies) {
           return '/register/'
         }

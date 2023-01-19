@@ -62,6 +62,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         avatarUrl: user.avatar_url,
       },
     },
-    revalidate: 60 * 60 * 24, // 1 dia
+    revalidate: 60 * 60, // 1 hora
   }
 }
